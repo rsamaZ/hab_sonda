@@ -8,7 +8,6 @@ import time
 import logging
 
 import ConfigHelper
-import RuleHelper
 from hav.BuzzerHelper.Buzzer import buzzer
 
 #Creacion del loger para los datos cientificos

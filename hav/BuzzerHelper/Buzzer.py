@@ -12,7 +12,6 @@ GPIO.setup(buzzerPin, GPIO.OUT, initial=GPIO.LOW)
 class buzzer():
 
     def on():
-        if ()
         GPIO.output(buzzerPin,GPIO.HIGH)
         print ("Buzzer ON - Emitiendo sonido...")
         time.sleep(2) # Delay in seconds
