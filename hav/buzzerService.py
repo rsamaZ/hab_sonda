@@ -8,7 +8,7 @@ import time
 import logging
 
 import ConfigHelper
-from hav.BuzzerHelper.Buzzer import buzzer
+from BuzzerHelper.Buzzer import buzzer
 
 #Creacion del loger para los datos cientificos
 logger = logging.getLogger('server_logger')

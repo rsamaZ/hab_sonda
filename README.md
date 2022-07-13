@@ -119,6 +119,8 @@ mkdir data
 
 <code>
 cd /data
+
+sudo apt-get install git
 	
 git clone https://github.com/Yggdrassil80/hab_sonda
 
