@@ -6,9 +6,14 @@
 
 import time
 import logging
-
 import ConfigHelper
-from BuzzerHelper.Buzzer import buzzer
+import RPi.GPIO as GPIO
+import ruleService
+buzzerPin = 26
+
+GPIO.setwarnings(False)
+GPIO.setmode(GPIO.BCM)
+GPIO.setup(buzzerPin, GPIO.OUT, initial=GPIO.LOW)
 
 #Creacion del loger para los datos cientificos
 logger = logging.getLogger('server_logger')
@@ -28,7 +33,6 @@ formatterInformer = logging.Formatter('[%(asctime)s][%(levelname)s][%(message)s]
 inf.setFormatter(formatterInformer)
 loggerLog.addHandler(inf)
 
-sensor = buzzer()
 
 act = ConfigHelper.isBuzzerActivo()
 tiempoMuestreoBuzzer = ConfigHelper.getTiempoMuestreoBuzzer()
@@ -42,17 +46,29 @@ if act == 1:
 		try:
 			tiempoMuestreoBuzzer = ConfigHelper.getToken("Buzzer", "tiempoMuestreoBuzzer", tiempoMuestreoBuzzer)
 
-            #INICIO: Espacio para recuperar los datos del sensor a partir de la libreria
+			def on():
+				GPIO.output(buzzerPin,GPIO.HIGH)
+				print ("Buzzer ON - Emitiendo sonido...")
+				time.sleep(1) # Delay in seconds
 			
-			buzzerOn = sensor.soundOn()
-		
-			buzzerOff = sensor.soundOff()
-			
-			buzzerTimer = sensor.buzzerTimer()
-			#calcular el tiempo que lleva la sonda sonando si emito cada X seg
+			#ruleService.thresholdOp:GPS.0.lt.10000:buzzer.on
+			def off():
+				GPIO.output(buzzerPin,GPIO.LOW)
+				print ("Buzzer OFF - No sound")
+				
 
+			def timeOn():
+				time.perf_counter(buzzerPin,GPIO.HIGH)
+				print("Tiempo que lleva sonando la sonda: ")
+			
+
+            #INICIO: Espacio para recuperar los datos del sensor a partir de la libreria
+			buzzerTimer = timeOn()
+			buzzerOn = on()
+			buzzerOff = off()
+			
             #Escritura de datos en el archivo de datos del sensor. Todo lo que se escriba aqui sera lo que potencialmente se acabe enviando por telemetria.
-			logger.info(str(round(buzzerOn)) + "|" + str(round(buzzerOff,4)) + "|" + str(int(buzzerTimer)))
+			logger.info(time(buzzerTimer))
 
                         #FINAL: Espacio para recuperar los datos del sensor a partir de la libreria
 			time.sleep(tiempoMuestreoBuzzer)
