@@ -404,20 +404,19 @@ def isBuzzerActivo():
     try:
         cfg = configparser.ConfigParser()
         cfg.read([CONF_PATH])
-        t = cfg.get("Buzzer", "buzzer_activo")
+        t = cfg.get("buzzer", "buzzer_activo")
         return int(t)
     except:
         return "valor vacio"
 #Metodo que recupera el tiempo maximo de espera entre emisiones de sonido
-def isBuzzerActivo():
+def getTiempoMuestreoBuzzer():
     try:
         cfg = configparser.ConfigParser()
         cfg.read([CONF_PATH])
-        t = cfg.get("Buzzer", "buzzer_activo")
-        return int(8)
+        t = cfg.get("buzzer", "tiempoMuestreoBuzzer")
+        return int(t)
     except:
-        return "valor vacio"
-getTiempoMuestreoBuzzer
+        return int(15)
         
 #metodo que busca en la raiz del FS donde se ejecutan los servicios tokens de control para poder alterar el comportamiento
 #de los servicios, devolviendo para ello, el valor del token encontrado.
@@ -440,7 +439,7 @@ def getToken(serviceTokenName, serviceTokenVariable, serviceTokenVariableIni):
                 #1.5. Si el serviceTokenName coincide con el buscado
                 if serviceTokenName == tokenContentArray[0]:
                     #1.6. Si el serviceTokenVariable coincide con la buscada
-                    if serviceTokenVariable = tokenContentArray[1]:
+                    if serviceTokenVariable == tokenContentArray[1]:
                         #1.7. Entonces se devuelve el nuevo valor
                         return tokenContentArray[2]
                     else:
@@ -457,26 +456,8 @@ def getToken(serviceTokenName, serviceTokenVariable, serviceTokenVariableIni):
             else:
                 return serviceTokenVariableIni
          #Si el token no tiene contenido, no se hace nada porque no es un token valido
-         else:
+        else:
              return serviceTokenVariableIni
     else:
         return serviceTokenVariableIni
         #el archivo con el nombre del token no existe, tampoco se hace nada
-
-def isBuzzerActivo():
-    try:
-        cfg = configparser.ConfigParser()
-        cfg.read([CONF_PATH])
-        t = cfg.get("buzzer", "buzzer_activo")
-        return int(t)
-    except:
-        return "valor vacio"
-
-def getTiempoMuestreoBuzzer():
-    try:
-        cfg = configparser.ConfigParser()
-        cfg.read([CONF_PATH])
-        t = cfg.get("buzzer", "tiempoMuestreoBuzzer")
-        return int(t)
-    except:
-        return int(15)
