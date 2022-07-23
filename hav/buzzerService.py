@@ -39,15 +39,9 @@ if act == 1:
 		try:
 			tiempoMuestreoBuzzer = ConfigHelper.getToken("Buzzer", "tiempoMuestreoBuzzer", tiempoMuestreoBuzzer)
 
-			buzzerStatus = sensor.getBuzzerDataFromFile()
 			buzzerInitial = sensor.initialCheck()
 			destroy()
 			#thresholdOp:GPS.0.lt.10000:buzzer.on
-
-			#Escritura de datos en el archivo de datos del sensor. Todo lo que se escriba aqui sera lo que potencialmente se acabe enviando por telemetria.
-			logger.info(str(round(buzzerStatus,1)) + "|" + str(round(buzzerInitial,2)))
-            #FINAL: Espacio para recuperar los datos del sensor a partir de la libreria
-			time.sleep(tiempoMuestreoBuzzer)
 
 		except Exception as e:
 			loggerLog.error("[buzzerService] Exception: " + str(e))
