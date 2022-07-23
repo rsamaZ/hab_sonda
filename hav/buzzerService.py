@@ -39,7 +39,6 @@ if act == 1:
 		try:
 			tiempoMuestreoBuzzer = ConfigHelper.getToken("Buzzer", "tiempoMuestreoBuzzer", tiempoMuestreoBuzzer)
 
-			buzzerStatus = sensor.getBuzzerDataFromFile()
 			buzzerInitial = sensor.initialCheck()
 			destroy()
 			#thresholdOp:GPS.0.lt.10000:buzzer.on
