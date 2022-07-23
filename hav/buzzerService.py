@@ -9,7 +9,6 @@ import logging
 import ConfigHelper
 import RPi.GPIO as GPIO
 import BuzzerHelper.Buzzer as Buzzer
-from hav.BuzzerHelper.Buzzer import *
 
 #Creacion del loger para los datos cientificos
 logger = logging.getLogger('server_logger')
@@ -37,22 +36,17 @@ loggerLog.info("[buzzerService] tiempoMuestreoBuzzer: " + str(tiempoMuestreoBuzz
 
 if act == 1:
 
-	while True:
-
 		try:
 			tiempoMuestreoBuzzer = ConfigHelper.getToken("Buzzer", "tiempoMuestreoBuzzer", tiempoMuestreoBuzzer)
 
 			buzzerStatus = sensor.getBuzzerDataFromFile()
 			buzzerInitial = sensor.initialCheck()
+			destroy()
 			#thresholdOp:GPS.0.lt.10000:buzzer.on
-			
 
-            #INICIO: Espacio para recuperar los datos del sensor a partir de la libreria
-			
-            #Escritura de datos en el archivo de datos del sensor. Todo lo que se escriba aqui sera lo que potencialmente se acabe enviando por telemetria.
-			logger.info(str(round(buzzerStatus,2)) + "|" + str(round(buzzerInitial,4)))
-
-                        #FINAL: Espacio para recuperar los datos del sensor a partir de la libreria
+			#Escritura de datos en el archivo de datos del sensor. Todo lo que se escriba aqui sera lo que potencialmente se acabe enviando por telemetria.
+			logger.info(str(round(buzzerStatus,1)) + "|" + str(round(buzzerInitial,2)))
+            #FINAL: Espacio para recuperar los datos del sensor a partir de la libreria
 			time.sleep(tiempoMuestreoBuzzer)
 
 		except Exception as e:
